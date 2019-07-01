@@ -1,2 +1,2 @@
-# restoam
-Repository for RestoAM, an Asset Management application hyper mega scalable
+# Resto Asset Management
+Repository for RestoAM, Asset Management made in a scalable and cool way.

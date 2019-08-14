@@ -10,13 +10,13 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.n
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 public interface ApplicationRoutes {
-    static RouterFunction<?> routes(AssetHandler hotelHandler) {
+    static RouterFunction<?> routes(AssetHandler assetHandler) {
         return nest(path("/restoam"),
                 nest(accept(MediaType.APPLICATION_JSON),
-                        route(GET("/{id}"), hotelHandler::get)
-                                .andRoute(POST("/"), hotelHandler::save)
-                                .andRoute(PUT("/"), hotelHandler::update)
-                                .andRoute(DELETE("/{id}"), hotelHandler::delete)
+                        route(GET("/{id}"), assetHandler::get)
+                                .andRoute(POST("/"), assetHandler::save)
+                                .andRoute(PUT("/"), assetHandler::update)
+                                .andRoute(DELETE("/{id}"), assetHandler::delete)
                 ));
     }
 

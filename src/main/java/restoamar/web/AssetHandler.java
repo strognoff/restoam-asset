@@ -26,22 +26,22 @@ public class AssetHandler {
         UUID uuid = UUID.fromString(request.pathVariable("id"));
         Mono<ServerResponse> notFound = ServerResponse.notFound().build();
         return this.assetService.findOne(uuid)
-                .flatMap(hotel -> ServerResponse.ok().body(Mono.just(hotel), Asset.class))
+                .flatMap(asset -> ServerResponse.ok().body(Mono.just(asset), Asset.class))
                 .switchIfEmpty(notFound);
     }
 
     public Mono<ServerResponse> save(ServerRequest serverRequest) {
         Mono<Asset> hotelToBeCreated = serverRequest.bodyToMono(Asset.class);
-        return hotelToBeCreated.flatMap(hotel ->
-                ServerResponse.status(HttpStatus.CREATED).body(assetService.save(hotel), Asset.class)
+        return hotelToBeCreated.flatMap(asset ->
+                ServerResponse.status(HttpStatus.CREATED).body(assetService.save(asset), Asset.class)
         );
     }
 
     public Mono<ServerResponse> update(ServerRequest serverRequest) {
         Mono<Asset> hotelToBeUpdated = serverRequest.bodyToMono(Asset.class);
 
-        return hotelToBeUpdated.flatMap(hotel ->
-                ServerResponse.status(HttpStatus.CREATED).body(assetService.update(hotel), Asset.class));
+        return hotelToBeUpdated.flatMap(asset ->
+                ServerResponse.status(HttpStatus.CREATED).body(assetService.update(asset), Asset.class));
     }
 
     public Mono<ServerResponse> delete(ServerRequest serverRequest) {

@@ -20,23 +20,23 @@ public class CassandraAssetRepository implements AssetRepository {
     }
 
     @Override
-    public Mono<Asset> save(Asset hotel) {
-        return this.cassandraTemplate.insert(hotel);
+    public Mono<Asset> save(Asset asset) {
+        return this.cassandraTemplate.insert(asset);
     }
 
     @Override
-    public Mono<Asset> update(Asset hotel) {
-        return this.cassandraTemplate.update(hotel);
+    public Mono<Asset> update(Asset asset) {
+        return this.cassandraTemplate.update(asset);
     }
 
     @Override
-    public Mono<Asset> findOne(UUID hotelId) {
-        return this.cassandraTemplate.selectOneById(hotelId, Asset.class);
+    public Mono<Asset> findOne(UUID assetId) {
+        return this.cassandraTemplate.selectOneById(assetId, Asset.class);
     }
 
     @Override
-    public Mono<Boolean> delete(UUID hotelId) {
-        return this.cassandraTemplate.deleteById(hotelId, Asset.class);
+    public Mono<Boolean> delete(UUID assetId) {
+        return this.cassandraTemplate.deleteById(assetId, Asset.class);
     }
 
     @Override

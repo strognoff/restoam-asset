@@ -31,8 +31,8 @@ public class AssetHandler {
     }
 
     public Mono<ServerResponse> save(ServerRequest serverRequest) {
-        Mono<Asset> hotelToBeCreated = serverRequest.bodyToMono(Asset.class);
-        return hotelToBeCreated.flatMap(asset ->
+        Mono<Asset> assetToBeCreated = serverRequest.bodyToMono(Asset.class);
+        return assetToBeCreated.flatMap(asset ->
                 ServerResponse.status(HttpStatus.CREATED).body(assetService.save(asset), Asset.class)
         );
     }

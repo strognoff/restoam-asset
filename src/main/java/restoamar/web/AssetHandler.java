@@ -38,9 +38,9 @@ public class AssetHandler {
     }
 
     public Mono<ServerResponse> update(ServerRequest serverRequest) {
-        Mono<Asset> hotelToBeUpdated = serverRequest.bodyToMono(Asset.class);
+        Mono<Asset> assetToBeUpdated = serverRequest.bodyToMono(Asset.class);
 
-        return hotelToBeUpdated.flatMap(asset ->
+        return assetToBeUpdated.flatMap(asset ->
                 ServerResponse.status(HttpStatus.CREATED).body(assetService.update(asset), Asset.class));
     }
 

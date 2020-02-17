@@ -40,9 +40,9 @@ public class AssetServiceImpl implements AssetService {
 
     @Override
     public Mono<Boolean> delete(UUID uuid) {
-        Mono<Asset> hotelMono = this.assetRepository.findOne(uuid);
-        return hotelMono
-                .flatMap((Asset hotel) -> this.assetRepository.delete(hotel.getId()));
+        Mono<Asset> arMono = this.assetRepository.findOne(uuid);
+        return arMono
+                .flatMap((Asset ar) -> this.assetRepository.delete(ar.getId()));
     }
 
 }

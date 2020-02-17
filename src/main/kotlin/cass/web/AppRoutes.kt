@@ -8,7 +8,7 @@ import restoamar.web.AssetHandler
 
 fun routes(assetHandler: AssetHandler): RouterFunction<*> {
     return router {
-        ("/hotels" and accept(MediaType.APPLICATION_JSON)).nest {
+        ("/restoar" and accept(MediaType.APPLICATION_JSON)).nest {
             GET("/{id}", assetHandler::get)
             POST("/", assetHandler::save)
             PUT("/", assetHandler::update)

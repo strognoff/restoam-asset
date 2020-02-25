@@ -40,9 +40,9 @@ public class CassandraAssetRepository implements AssetRepository {
     }
 
     @Override
-    public Flux<Asset> findByState(String state) {
+    public Flux<Asset> findByName(String name) {
         Select select = QueryBuilder.select().from("asset_by_state");
-        select.where(QueryBuilder.eq("state", state));
+        select.where(QueryBuilder.eq("name", name));
         return this.cassandraTemplate.select(select, Asset.class);
     }
 }

@@ -40,6 +40,8 @@ compileTestKotlin {
 }
 
 sourceCompatibility = 1.8
+def mockitoVersion = '2.23.4'
+def junitVersion = '5.3.1'
 
 repositories {
     mavenCentral()
@@ -56,4 +58,8 @@ dependencies {
     compile("org.jetbrains.kotlin:kotlin-reflect")
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('io.projectreactor:reactor-test')
+    testCompile group: 'org.mockito', name: 'mockito-core', version: mockitoVersion
+    testCompile "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testCompile "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
+    testCompile "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
 }

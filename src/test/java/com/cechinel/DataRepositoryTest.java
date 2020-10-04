@@ -24,7 +24,8 @@ public class DataRepositoryTest {
     private AssetServiceImpl assetServiceImpl;
 
     //private final String NAME  = "television45inch";
-    private final String RANDOM_ASSET_ID = "ASSETTEST01";
+    private final UUID RANDOM_ASSET_ID = UUID.randomUUID();
+    ;
 
     @BeforeEach
     void setUp() {

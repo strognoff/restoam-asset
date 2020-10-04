@@ -13,11 +13,13 @@ public class Asset implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @PrimaryKey
-    private String id;
+    private UUID id;
 
     private String name;
 
     private String description;
+
+    private String location;
 
     public Asset() {
     }
@@ -30,12 +32,20 @@ public class Asset implements Serializable {
         this.description = description;
     }
 
-    public Asset(String id, String name) {
+    public Asset(UUID id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public String getId() {
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public UUID getId() {
         return id;
     }
 
@@ -43,7 +53,7 @@ public class Asset implements Serializable {
         return this.name;
     }
 
-    public void setId(String assetid) {
+    public void setId(UUID assetid) {
         this.id = assetid;
     }
 

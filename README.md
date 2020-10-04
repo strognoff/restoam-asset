@@ -21,3 +21,12 @@ Executing the bash:
 docker exec -it <name_of_container> bash
 
 Then when the bash opens, you just need to execute: cqlsh
+
+Creating the table:
+
+CREATE TABLE asset(
+id uuid PRIMARY KEY,
+name text,
+description text,
+location text
+)

@@ -14,7 +14,7 @@ public interface ApplicationRoutes {
         return nest(path("/restoam"),
                 nest(accept(MediaType.APPLICATION_JSON),
                         route(GET("/{id}"), assetHandler::get)
-                                .andRoute(POST("/"), assetHandler::save)
+                                .andRoute(POST("/{id}"), assetHandler::save)
                                 .andRoute(PUT("/"), assetHandler::update)
                                 .andRoute(DELETE("/{id}"), assetHandler::delete)
                 ));

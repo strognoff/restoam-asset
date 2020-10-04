@@ -10,8 +10,6 @@ import reactor.core.publisher.Mono;
 import restoamar.domain.Asset;
 import restoamar.service.AssetService;
 
-import java.util.UUID;
-
 @Service
 public class AssetHandler {
 
@@ -23,9 +21,10 @@ public class AssetHandler {
     }
 
     public Mono<ServerResponse> get(ServerRequest request) {
-        UUID uuid = UUID.fromString(request.pathVariable("id"));
+        String name = request.pathVariable("name");
         Mono<ServerResponse> notFound = ServerResponse.notFound().build();
-        return this.assetService.findOne(uuid)
+
+        return this.assetService.findOne(name)
                 .flatMap(asset -> ServerResponse.ok().body(Mono.just(asset), Asset.class))
                 .switchIfEmpty(notFound);
     }
@@ -45,9 +44,9 @@ public class AssetHandler {
     }
 
     public Mono<ServerResponse> delete(ServerRequest serverRequest) {
-        UUID uuid = UUID.fromString(serverRequest.pathVariable("id"));
+        String assetid = serverRequest.pathVariable("id");
 
-        return this.assetService.delete(uuid).flatMap(result -> ServerResponse.accepted().build());
+        return this.assetService.delete(assetid).flatMap(result -> ServerResponse.accepted().build());
     }
 
 

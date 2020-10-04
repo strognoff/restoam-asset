@@ -8,8 +8,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import restoamar.domain.Asset;
 
-import java.util.UUID;
-
 @Repository
 public class CassandraAssetRepository implements AssetRepository {
 
@@ -30,19 +28,19 @@ public class CassandraAssetRepository implements AssetRepository {
     }
 
     @Override
-    public Mono<Asset> findOne(UUID assetId) {
-        return this.cassandraTemplate.selectOneById(assetId, Asset.class);
+    public Mono<Asset> findOne(String id) {
+        return this.cassandraTemplate.selectOneById(id, Asset.class);
     }
 
     @Override
-    public Mono<Boolean> delete(UUID assetId) {
-        return this.cassandraTemplate.deleteById(assetId, Asset.class);
+    public Mono<Boolean> delete(String id) {
+        return this.cassandraTemplate.deleteById(id, Asset.class);
     }
 
     @Override
-    public Flux<Asset> findByName(String name) {
-        Select select = QueryBuilder.select().from("asset_by_state");
-        select.where(QueryBuilder.eq("name", name));
+    public Flux<Asset> findByName(String id) {
+        Select select = QueryBuilder.select().from("asset");
+        select.where(QueryBuilder.eq("id", id));
         return this.cassandraTemplate.select(select, Asset.class);
     }
 }

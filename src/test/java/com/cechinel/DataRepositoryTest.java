@@ -19,12 +19,12 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 public class DataRepositoryTest {
-    public static final UUID RANDOM_ASSET_ID = UUID.randomUUID();
+
     private AssetRepository mockAssetRepository;
     private AssetServiceImpl assetServiceImpl;
 
-    private final String name  = "television45inch";
-    private final UUID assetId = UUID.randomUUID();
+    //private final String NAME  = "television45inch";
+    private final String RANDOM_ASSET_ID = "ASSETTEST01";
 
     @BeforeEach
     void setUp() {

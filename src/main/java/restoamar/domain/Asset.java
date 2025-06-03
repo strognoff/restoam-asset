@@ -1,27 +1,48 @@
 package restoamar.domain;
 
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
-
-import java.io.Serializable;
-import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.util.UUID;
 
-@Table("asset")
-public class Asset implements Serializable {
+@Entity
+public class Asset {
 
-    private static final long serialVersionUID = 1L;
-
-    @PrimaryKey
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-
     private String name;
-
     private String description;
-
     private String location;
 
+    // Default constructor required by Hibernate
     public Asset() {
+    }
+
+    // Constructor with arguments
+    public Asset(UUID id, String name, String description, String location) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.location = location;
+    }
+
+    // Getters and setters
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -32,11 +53,6 @@ public class Asset implements Serializable {
         this.description = description;
     }
 
-    public Asset(UUID id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
     public String getLocation() {
         return location;
     }
@@ -44,31 +60,4 @@ public class Asset implements Serializable {
     public void setLocation(String location) {
         this.location = location;
     }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setId(UUID assetid) {
-        this.id = assetid;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Asset asset = (Asset) o;
-        return Objects.equals(id, asset.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-
 }

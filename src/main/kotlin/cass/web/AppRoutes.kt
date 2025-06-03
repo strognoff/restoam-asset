@@ -1,18 +1,36 @@
 package cass.web
 
-import org.springframework.http.MediaType
-import org.springframework.web.reactive.function.server.RouterFunction
-import org.springframework.web.reactive.function.server.router
-import restoamar.web.AssetHandler
+import org.springframework.web.bind.annotation.*
+import restoamar.domain.Asset
+import restoamar.service.AssetService
+import java.util.*
 
+@RestController
+@RequestMapping("/restoar")
+class AppRoutes(private val assetService: AssetService) {
 
-fun routes(assetHandler: AssetHandler): RouterFunction<*> {
-    return router {
-        ("/restoar" and accept(MediaType.APPLICATION_JSON)).nest {
-            GET("/{id}", assetHandler::get)
-            POST("/", assetHandler::save)
-            PUT("/", assetHandler::update)
-            DELETE("/{id}", assetHandler::delete)
-        }
+    @GetMapping("/{id}")
+    fun get(@PathVariable id: UUID): Asset? {
+        return assetService.findOne(id)
+    }
+
+    @PostMapping("/")
+    fun save(@RequestBody asset: Asset): Asset {
+        return assetService.save(asset)
+    }
+
+    @PutMapping("/")
+    fun update(@RequestBody asset: Asset): Asset {
+        return assetService.update(asset)
+    }
+
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable id: UUID): Boolean {
+        return assetService.delete(id)
+    }
+
+    @GetMapping("/search")
+    fun findByName(@RequestParam name: String): List<Asset> {
+        return assetService.findByName(name)
     }
 }

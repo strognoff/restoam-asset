@@ -1,17 +1,17 @@
 package restoamar.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.server.ServerRequest;
-import org.springframework.web.reactive.function.server.ServerResponse;
-import reactor.core.publisher.Mono;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import restoamar.domain.Asset;
 import restoamar.service.AssetService;
 
+import java.util.List;
 import java.util.UUID;
 
-@Service
+@Controller
+@RequestMapping("/restoar")
 public class AssetHandler {
 
     private final AssetService assetService;
@@ -21,41 +21,39 @@ public class AssetHandler {
         this.assetService = assetService;
     }
 
-    public Mono<ServerResponse> get(ServerRequest request) {
-        UUID id = UUID.fromString(request.pathVariable("id"));
-        Mono<ServerResponse> notFound = ServerResponse.notFound().build();
-
-        return this.assetService.findOne(id)
-                .flatMap(asset -> ServerResponse.ok().body(Mono.just(asset), Asset.class))
-                .switchIfEmpty(notFound);
+    @GetMapping("/{id}")
+    public ResponseEntity<Asset> get(@PathVariable UUID id) {
+        Asset asset = assetService.findOne(id);
+        if (asset == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(asset);
     }
 
-//    public Mono<ServerResponse> getByName(ServerRequest request) {
-//        String name = "Asset001";
-//        Mono<ServerResponse> notFound = ServerResponse.notFound().build();
-//
-//        return this.assetService.findByName(name)
-//                .flatMap(asset -> ServerResponse.ok().body(Mono.just(asset), Asset.class));
-//    }
-
-    public Mono<ServerResponse> save(ServerRequest serverRequest) {
-        Mono<Asset> assetToBeCreated = serverRequest.bodyToMono(Asset.class);
-        return assetToBeCreated.flatMap(asset ->
-                ServerResponse.status(HttpStatus.CREATED).body(assetService.save(asset), Asset.class)
-        );
+    @PostMapping("/")
+    public ResponseEntity<Asset> save(@RequestBody Asset asset) {
+        Asset savedAsset = assetService.save(asset);
+        return ResponseEntity.status(201).body(savedAsset);
     }
 
-    public Mono<ServerResponse> update(ServerRequest serverRequest) {
-        Mono<Asset> assetToBeUpdated = serverRequest.bodyToMono(Asset.class);
-
-        return assetToBeUpdated.flatMap(asset ->
-                ServerResponse.status(HttpStatus.CREATED).body(assetService.update(asset), Asset.class));
+    @PutMapping("/")
+    public ResponseEntity<Asset> update(@RequestBody Asset asset) {
+        Asset updatedAsset = assetService.update(asset);
+        return ResponseEntity.ok(updatedAsset);
     }
 
-    public Mono<ServerResponse> delete(ServerRequest serverRequest) {
-        UUID id = UUID.fromString(serverRequest.pathVariable("id"));
-        return this.assetService.delete(id).flatMap(result -> ServerResponse.accepted().build());
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        boolean deleted = assetService.delete(id);
+        if (deleted) {
+            return ResponseEntity.accepted().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
-
+    @GetMapping("/search")
+    public ResponseEntity<List<Asset>> findByName(@RequestParam String name) {
+        List<Asset> assets = assetService.findByName(name);
+        return ResponseEntity.ok(assets);
+    }
 }

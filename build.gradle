@@ -1,7 +1,7 @@
 buildscript {
     ext {
-        springBootVersion = '2.1.1.RELEASE'
-        kotlinVersion = '1.2.71'
+        springBootVersion = '2.7.5'
+        kotlinVersion = '1.8.21' // Update to the latest Kotlin version
     }
     repositories {
         mavenCentral()
@@ -22,24 +22,24 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 jar {
-    baseName = 'restoam-asset-cassandra'
-    version = '0.0.5-SNAPSHOT'
+    archiveBaseName.set('restoam-asset') // Use archiveBaseName instead of baseName
+    archiveVersion.set('0.0.5-SNAPSHOT') // Use archiveVersion for the version
 }
 
 compileKotlin {
     kotlinOptions {
         freeCompilerArgs = ["-Xjsr305=strict"]
-        jvmTarget = "1.8"
+        jvmTarget = "15"
     }
 }
 compileTestKotlin {
     kotlinOptions {
         freeCompilerArgs = ["-Xjsr305=strict"]
-        jvmTarget = "1.8"
+        jvmTarget = "15"
     }
 }
 
-sourceCompatibility = 1.8
+sourceCompatibility = 15
 def mockitoVersion = '2.23.4'
 def junitVersion = '5.3.1'
 
@@ -51,15 +51,23 @@ repositories {
 
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-webflux')
-    compile('org.springframework.boot:spring-boot-starter-data-cassandra-reactive')
-    compile('com.fasterxml.jackson.module:jackson-module-kotlin')
-    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    compile("org.jetbrains.kotlin:kotlin-reflect")
-    testCompile('org.springframework.boot:spring-boot-starter-test')
-    testCompile('io.projectreactor:reactor-test')
-    testCompile group: 'org.mockito', name: 'mockito-core', version: mockitoVersion
-    testCompile "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
-    testCompile "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
-    testCompile "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    // Spring Boot Starter Web for Spring MVC and web annotations
+    implementation('org.springframework.boot:spring-boot-starter-web')
+
+    // Spring Boot Starter Data JPA for database access
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+
+    // PostgreSQL driver (or your database driver)
+    runtimeOnly('org.postgresql:postgresql')
+
+    // Kotlin dependencies (if applicable)
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+
+    // JUnit 5 for testing
+    testImplementation('org.junit.jupiter:junit-jupiter:5.9.3')
+
+    // Mockito for mocking in tests
+    testImplementation('org.mockito:mockito-core:4.11.0')
 }
+

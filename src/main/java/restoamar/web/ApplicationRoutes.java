@@ -49,10 +49,9 @@ public class ApplicationRoutes {
         }
         return ResponseEntity.notFound().build();
     }
-
-    @GetMapping("/search")
-    public ResponseEntity<List<Asset>> findByName(@RequestParam String name) {
-        List<Asset> assets = assetService.findByName(name);
+    @GetMapping("/assets/all")
+    public ResponseEntity<List<Asset>> getAllAssets() {
+        List<Asset> assets = assetService.findAll();
         return ResponseEntity.ok(assets);
     }
 }

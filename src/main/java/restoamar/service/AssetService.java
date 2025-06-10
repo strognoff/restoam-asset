@@ -9,6 +9,6 @@ public interface AssetService {
     Asset save(Asset asset);
     Asset update(Asset asset);
     Asset findOne(UUID id);
-    List<Asset> findByName(String name);
+    List<Asset> findAll();
     boolean delete(UUID id);
 }

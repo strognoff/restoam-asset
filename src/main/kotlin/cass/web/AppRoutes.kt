@@ -29,8 +29,8 @@ class AppRoutes(private val assetService: AssetService) {
         return assetService.delete(id)
     }
 
-    @GetMapping("/search")
-    fun findByName(@RequestParam name: String): List<Asset> {
-        return assetService.findByName(name)
+    @GetMapping("/assets/all")
+    fun getAllAssets(): List<Asset> {
+        return assetService.findAll()
     }
 }

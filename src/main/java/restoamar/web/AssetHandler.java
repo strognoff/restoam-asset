@@ -50,10 +50,4 @@ public class AssetHandler {
         }
         return ResponseEntity.notFound().build();
     }
-
-    @GetMapping("/search")
-    public ResponseEntity<List<Asset>> findByName(@RequestParam String name) {
-        List<Asset> assets = assetService.findByName(name);
-        return ResponseEntity.ok(assets);
-    }
 }

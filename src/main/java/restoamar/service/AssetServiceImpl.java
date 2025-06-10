@@ -43,8 +43,8 @@ public class AssetServiceImpl implements AssetService {
     }
 
     @Override
-    public List<Asset> findByName(String name) {
-        return this.assetRepository.findByName(name);
+    public List<Asset> findAll() {
+        return assetRepository.findAll();
     }
 
     @Override

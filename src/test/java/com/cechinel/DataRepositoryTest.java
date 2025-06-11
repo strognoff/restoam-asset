@@ -40,6 +40,9 @@ public class DataRepositoryTest {
 
     private Asset assetRecord() {
         final String name = "testasset1";
-        return new Asset(RANDOM_ASSET_ID, name);
+        final String location = "testasset1";
+        final String description = "testasset1";
+        final Double cost = 100.00;
+        return new Asset(RANDOM_ASSET_ID, name, description, location,cost);
     }
 }

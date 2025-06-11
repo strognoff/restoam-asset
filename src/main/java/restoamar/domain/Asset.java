@@ -15,17 +15,19 @@ public class Asset {
     private String name;
     private String description;
     private String location;
+    private double cost; // New field for the value of the asset in pounds
 
     // Default constructor required by Hibernate
     public Asset() {
     }
 
     // Constructor with arguments
-    public Asset(UUID id, String name, String description, String location) {
+    public Asset(UUID id, String name, String description, String location, double cost) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.location = location;
+        this.cost = cost;
     }
 
     // Getters and setters
@@ -59,5 +61,13 @@ public class Asset {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
     }
 }

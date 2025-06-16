@@ -26,7 +26,7 @@ public class DataRepositoryTest {
 
     @Test
     @DisplayName("insert data and verify insertion")
-    void testSaveAsset() {
+    public void testSaveAsset() {
         // Arrange
         Asset asset = assetRecord();
         when(mockAssetRepository.save(asset)).thenReturn(asset);

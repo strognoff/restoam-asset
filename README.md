@@ -7,26 +7,16 @@ This is the Asset module, where:
 - Update the Asset name and description
 - Delete an Asset from the database
 
-Instructions for Cassandra:
+## Running the Application with Docker
 
-Pulling the image:
-docker pull cassandra:latest
+You can package and run the application in a Docker container by following these steps:
 
-Executing the image:
-docker run -d — name <name_of_container> -p 9042:9042 cassandra
+### 1. Build the Docker Image
+First, ensure the application JAR file is built. Then, build the Docker image using the provided `Dockerfile`.
 
-You will need to forward the port of the linux to your sysop if you are using a linux vm.
+**Command:**
+```bash
+docker build -t restoam-asset:latest .
 
-Executing the bash:
-docker exec -it <name_of_container> bash
-
-Then when the bash opens, you just need to execute: cqlsh
-
-Creating the table:
-
-CREATE TABLE asset(
-id uuid PRIMARY KEY,
-name text,
-description text,
-location text
-)
+#redirect the port
+docker run -d -p 8080:8080 --name restoam-asset-container restoam-asset:latest

@@ -69,6 +69,9 @@ dependencies {
 
     // Mockito for mocking in tests
     testImplementation('org.mockito:mockito-core:4.11.0')
+
+    // OpenAPI / Swagger UI
+    implementation('org.springdoc:springdoc-openapi-ui:1.7.0')
 }
 
 test {

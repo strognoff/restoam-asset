@@ -3,14 +3,18 @@ package restoamar.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import restoamar.domain.Asset;
+import restoamar.domain.ValueCurrency;
 import restoamar.service.AssetService;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/restoam")
+@RequestMapping("/restoam/assets")
 public class ApplicationRoutes {
 
     private final AssetService assetService;
@@ -29,14 +33,15 @@ public class ApplicationRoutes {
         return ResponseEntity.ok(asset);
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<Asset> save(@RequestBody Asset asset) {
         Asset savedAsset = assetService.save(asset);
         return ResponseEntity.status(201).body(savedAsset);
     }
 
-    @PutMapping("/")
-    public ResponseEntity<Asset> update(@RequestBody Asset asset) {
+    @PutMapping("/{id}")
+    public ResponseEntity<Asset> update(@PathVariable UUID id, @RequestBody Asset asset) {
+        asset.setId(id);
         Asset updatedAsset = assetService.update(asset);
         return ResponseEntity.ok(updatedAsset);
     }
@@ -49,9 +54,20 @@ public class ApplicationRoutes {
         }
         return ResponseEntity.notFound().build();
     }
-    @GetMapping("/assets/all")
-    public ResponseEntity<List<Asset>> getAllAssets() {
-        List<Asset> assets = assetService.findAll();
+    @GetMapping("")
+    public ResponseEntity<Page<Asset>> getAllAssets(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "createdDate") String sortBy,
+            @RequestParam(defaultValue = "desc") String sortDir,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String location,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) ValueCurrency currency
+    ) {
+        Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<Asset> assets = assetService.findAll(pageable, name, location, description, currency);
         return ResponseEntity.ok(assets);
     }
 }

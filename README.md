@@ -7,6 +7,27 @@ This is the Asset module, where:
 - Update the Asset name and description
 - Delete an Asset from the database
 
+## API
+
+### Asset fields
+- name
+- description
+- location
+- createdDate (ISO-8601)
+- valueAmount
+- valueCurrency (USD, GBP, BRL)
+
+### Endpoints
+- GET /restoam/assets/{id}
+- GET /restoam/assets?page=0&size=10&sortBy=createdDate&sortDir=desc&name=&location=&description=&currency=
+- POST /restoam/assets
+- PUT /restoam/assets/{id}
+- DELETE /restoam/assets/{id}
+
+### OpenAPI
+- /v3/api-docs
+- /swagger-ui.html
+
 ## Running the Application with Docker
 
 You can package and run the application in a Docker container by following these steps:
